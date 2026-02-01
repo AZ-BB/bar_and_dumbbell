@@ -1,0 +1,118 @@
+{
+  "men": [
+    {
+      "nameEn": "VIP – 12 Months + 2 Free",
+      "nameAr": "VIP – 12 شهر + 2 مجاناً",
+      "duration": "14",
+      "price": 5020,
+      "features": [
+        { "en": "15 free invitations", "ar": "15 دعوات مجانية" },
+        { "en": "12 nutrition plans", "ar": "12 خطط غذائية" },
+        { "en": "12 sauna sessions", "ar": "12 ساونا" },
+        { "en": "12 jacuzzi sessions", "ar": "12 جاكوزي" }
+      ],
+      "isVIP": true
+    },
+    {
+      "nameEn": "12 Months",
+      "nameAr": "12 شهر",
+      "duration": "12",
+      "price": 4500,
+      "features": [
+        { "en": "12 free invitations", "ar": "12 دعوات مجانية" },
+        { "en": "10 nutrition plans", "ar": "10 خطط غذائية" },
+        { "en": "10 sauna sessions", "ar": "10 ساونا" },
+        { "en": "10 jacuzzi sessions", "ar": "10 جاكوزي" }
+      ]
+    },
+    {
+      "nameEn": "6 Months + 1 Free",
+      "nameAr": "6 أشهر + 1 مجاناً",
+      "duration": "7",
+      "price": 3300,
+      "features": [
+        { "en": "6 free invitations", "ar": "6 دعوات مجانية" },
+        { "en": "5 nutrition plans", "ar": "5 خطط غذائية" },
+        { "en": "6 sauna sessions", "ar": "6 ساونا" },
+        { "en": "6 jacuzzi sessions", "ar": "6 جاكوزي" }
+      ]
+    },
+    {
+      "nameEn": "3 Months + 1/2 Free",
+      "nameAr": "3 أشهر + 1/2 شهر مجاناً",
+      "duration": "3.5",
+      "price": 2200,
+      "features": [
+        { "en": "4 free invitations", "ar": "4 دعوات مجانية" },
+        { "en": "3 nutrition plans", "ar": "3 خطط غذائية" },
+        { "en": "3 sauna sessions", "ar": "3 ساونا" },
+        { "en": "3 jacuzzi sessions", "ar": "3 جاكوزي" }
+      ]
+    },
+    {
+      "nameEn": "1 Month",
+      "nameAr": "شهر واحد",
+      "duration": "1",
+      "price": 900,
+      "features": [
+        { "en": "1 free invitation", "ar": "1 دعوة مجانية" },
+        { "en": "", "ar": "" },
+        { "en": "1 sauna session", "ar": "1 ساونا" },
+        { "en": "1 jacuzzi session", "ar": "1 جاكوزي" }
+      ]
+    }
+  ],
+  "women": [
+    {
+      "nameEn": "VIP – 12 Months + 2 Free",
+      "nameAr": "VIP – 12 شهر + 2 مجاناً",
+      "duration": "14",
+      "price": 4000,
+      "features": [
+        { "en": "15 free invitations", "ar": "15 دعوات مجانية" },
+        { "en": "12 nutrition plans", "ar": "12 خطط غذائية" }
+      ],
+      "isVIP": true
+    },
+    {
+      "nameEn": "12 Months",
+      "nameAr": "12 شهر",
+      "duration": "12",
+      "price": 3600,
+      "features": [
+        { "en": "12 free invitations", "ar": "12 دعوات مجانية" },
+        { "en": "10 nutrition plans", "ar": "10 خطط غذائية" }
+      ]
+    },
+    {
+      "nameEn": "6 Months + 1 Free",
+      "nameAr": "6 أشهر + 1 مجاناً",
+      "duration": "7",
+      "price": 2400,
+      "features": [
+        { "en": "6 free invitations", "ar": "6 دعوات مجانية" },
+        { "en": "5 nutrition plans", "ar": "5 خطط غذائية" }
+      ]
+    },
+    {
+      "nameEn": "3 Months",
+      "nameAr": "3 أشهر",
+      "duration": "3",
+      "price": 1500,
+      "features": [
+        { "en": "4 free invitations", "ar": "4 دعوات مجانية" },
+        { "en": "3 nutrition plans", "ar": "3 خطط غذائية" }
+      ]
+    },
+    {
+      "nameEn": "1 Month",
+      "nameAr": "شهر واحد",
+      "duration": "1",
+      "price": 650,
+      "features": [
+        { "en": "2 free invitations", "ar": "2 دعوات مجانية" },
+        { "en": "", "ar": "" }
+      ]
+    }
+  ]
+}

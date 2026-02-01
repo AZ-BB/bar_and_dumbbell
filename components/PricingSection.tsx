@@ -1,104 +1,72 @@
 "use client";
 
+import { Check } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
 import { getWhatsAppLink } from "@/lib/constants";
 import { useInView } from "@/hooks/useInView";
 import { useState } from "react";
 
+type FeatureText = { en: string; ar: string };
+
 type PricingPlan = {
-  nameKey: keyof typeof translations.ar;
+  nameEn: string;
+  nameAr: string;
   duration: string;
   price: number;
-  features: string[];
+  features: FeatureText[];
   isVIP?: boolean;
 };
 
-const menPlans: PricingPlan[] = [
-  {
-    nameKey: "pricingVIP",
-    duration: "14",
-    price: 5000,
-    features: ["15", "12", "12", "12"],
-    isVIP: true,
-  },
-  {
-    nameKey: "pricing12Months",
-    duration: "12",
-    price: 4500,
-    features: ["12", "10", "10", "10"],
-  },
-  {
-    nameKey: "pricing6Months",
-    duration: "7",
-    price: 3300,
-    features: ["6", "5", "6", "6"],
-  },
-  {
-    nameKey: "pricing3Months",
-    duration: "3.5",
-    price: 2200,
-    features: ["4", "3", "3", "3"],
-  },
-  {
-    nameKey: "pricing1Month",
-    duration: "1",
-    price: 900,
-    features: ["1", "0", "1", "1"],
-  },
-];
+export type PlansData = {
+  men: PricingPlan[];
+  women: PricingPlan[];
+};
 
-const womenPlans: PricingPlan[] = [
-  {
-    nameKey: "pricingVIP",
-    duration: "14",
-    price: 4000,
-    features: ["15", "12"],
-    isVIP: true,
-  },
-  {
-    nameKey: "pricing12Months",
-    duration: "12",
-    price: 3600,
-    features: ["12", "10"],
-  },
-  {
-    nameKey: "pricingWomen6",
-    duration: "7",
-    price: 2400,
-    features: ["6", "5"],
-  },
-  {
-    nameKey: "pricingWomen3",
-    duration: "3",
-    price: 1500,
-    features: ["4", "3"],
-  },
-  {
-    nameKey: "pricing1Month",
-    duration: "1",
-    price: 650,
-    features: ["2", "0"],
-  },
-];
+type PricingSectionProps = {
+  plans: PlansData;
+};
 
-export default function PricingSection() {
+export default function PricingSection({ plans }: PricingSectionProps) {
   const { language, isRTL } = useLanguage();
   const t = translations[language];
   const [activeTab, setActiveTab] = useState<"men" | "women">("men");
   const { ref, isVisible } = useInView();
 
-  const currentPlans = activeTab === "men" ? menPlans : womenPlans;
+  const currentPlans = plans
+    ? activeTab === "men"
+      ? plans.men
+      : plans.women
+    : [];
+
+  const getPlanName = (plan: PricingPlan) =>
+    language === "ar" ? plan.nameAr : plan.nameEn;
+
+  const getFeatureText = (f: FeatureText): string =>
+    language === "ar" ? (f.ar || f.en) : (f.en || f.ar);
+
+  if (!plans || currentPlans.length === 0) {
+    return (
+      <section className="py-20 bg-gym-gray" id="pricing">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
+            {t.pricingTitle}
+          </h2>
+          <div className="text-gray-400">No plans available.</div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 bg-gym-gray" id="pricing">
       <div ref={ref} className="container mx-auto px-4">
-        <h2 className={`text-4xl md:text-5xl font-bold text-center mb-12 animate-in-up ${isVisible ? "visible" : ""}`}>
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 animate-in-up visible">
           {t.pricingTitle}
         </h2>
 
         {/* Tabs */}
-        <div className={`flex justify-center mb-12 animate-in ${isVisible ? "visible" : ""}`}>
+        <div className="flex justify-center mb-12 animate-in visible">
           <div className="inline-flex bg-gym-dark rounded-lg p-1">
             <button
               onClick={() => setActiveTab("men")}
@@ -130,7 +98,7 @@ export default function PricingSection() {
             return (
             <div
               key={index}
-              className={`bg-gym-dark rounded-lg p-6 flex flex-col animate-in-scale ${staggerClass} ${isVisible ? "visible" : ""} ${
+              className={`bg-gym-dark rounded-lg p-6 flex flex-col animate-in-scale ${staggerClass} visible ${
                 plan.isVIP
                   ? "border-2 border-gym-yellow relative overflow-hidden"
                   : "border border-gym-gray"
@@ -144,7 +112,7 @@ export default function PricingSection() {
 
               <div className="flex-1">
                 <h3 className="text-xl font-bold mb-2 text-gym-yellow mt-4">
-                  {t[plan.nameKey]}
+                  {getPlanName(plan)}
                 </h3>
 
                 <div className="mb-4">
@@ -154,48 +122,22 @@ export default function PricingSection() {
                   <span className="text-gray-400 ml-2">EGP</span>
                 </div>
 
-                {plan.features.length > 0 && (
+                {plan.features?.length > 0 && (
                   <div className="space-y-2 mb-6">
                     <p className="text-sm font-semibold text-gray-300">
                       {t.pricingIncludes}
                     </p>
-                    {activeTab === "men" ? (
-                      <>
-                        {plan.features[0] && plan.features[0] !== "0" && (
-                          <p className="text-sm text-gray-400">
-                            ✓ {plan.features[0]} {t.pricingInvitations}
-                          </p>
-                        )}
-                        {plan.features[1] && plan.features[1] !== "0" && (
-                          <p className="text-sm text-gray-400">
-                            ✓ {plan.features[1]} {t.pricingNutrition}
-                          </p>
-                        )}
-                        {plan.features[2] && plan.features[2] !== "0" && (
-                          <p className="text-sm text-gray-400">
-                            ✓ {plan.features[2]} {t.pricingSauna}
-                          </p>
-                        )}
-                        {plan.features[3] && plan.features[3] !== "0" && (
-                          <p className="text-sm text-gray-400">
-                            ✓ {plan.features[3]} {t.pricingJacuzzi}
-                          </p>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        {plan.features[0] && plan.features[0] !== "0" && (
-                          <p className="text-sm text-gray-400">
-                            ✓ {plan.features[0]} {t.pricingInvitations}
-                          </p>
-                        )}
-                        {plan.features[1] && plan.features[1] !== "0" && (
-                          <p className="text-sm text-gray-400">
-                            ✓ {plan.features[1]} {t.pricingNutrition}
-                          </p>
-                        )}
-                      </>
-                    )}
+                    {plan.features.map((feature, i) => {
+                      const text = typeof feature === "object" && feature !== null && "en" in feature && "ar" in feature
+                        ? getFeatureText(feature as FeatureText)
+                        : String(feature);
+                      if (!text.trim()) return null;
+                      return (
+                        <p key={i} className="text-sm text-gray-400 flex items-center gap-2">
+                          <Check className="w-4 h-4 shrink-0 text-gym-yellow" /> {text}
+                        </p>
+                      );
+                    })}
                   </div>
                 )}
               </div>
