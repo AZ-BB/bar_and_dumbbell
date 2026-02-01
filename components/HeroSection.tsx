@@ -56,13 +56,13 @@ export default function HeroSection() {
           loop
           playsInline
           onError={handleVideoError}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover object-[center_35%]"
         >
           <source src="/videos/hero.mp4" type="video/mp4" />
         </video>
       ) : (
         <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center"
+          className="absolute inset-0 w-full h-full bg-cover bg-[center_35%]"
           style={{ backgroundImage: "url('/images/hero-1.jpg')" }}
         />
       )}
