@@ -27,6 +27,34 @@ async function getDefaultPlans(): Promise<PlansData> {
   return JSON.parse(data);
 }
 
+/**
+ * Fetches plans from KV store only (no cache, no file fallback). Use from CMS.
+ */
+export async function getPlansFromKVOnly(): Promise<PlansData | null> {
+  if (!KV_API_BASE_URL || !KV_API_KEY || !KV_KEY) return null;
+  try {
+    const url = `${KV_API_BASE_URL.replace(/\/$/, "")}/${encodeURIComponent(KV_KEY)}`;
+    const response = await fetch(url, {
+      headers: { "X-API-Key": KV_API_KEY },
+      cache: "no-store",
+    });
+    if (!response.ok) return null;
+    const data = await response.json();
+    const value = data?.value;
+    if (isValidPlans(value)) return value;
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Fetches plans directly from KV with file fallback (no cache). For non-CMS use.
+ */
+export async function getPlansFresh(): Promise<PlansData> {
+  return fetchPlansUncached();
+}
+
 async function fetchPlansUncached(): Promise<PlansData> {
   try {
     if (KV_API_BASE_URL && KV_API_KEY && KV_KEY) {
