@@ -2,6 +2,7 @@
 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
+import { useInView } from "@/hooks/useInView";
 import Image from "next/image";
 
 const galleryImages = [
@@ -22,19 +23,22 @@ const galleryImages = [
 export default function GallerySection() {
   const { language } = useLanguage();
   const t = translations[language];
+  const { ref, isVisible } = useInView();
 
   return (
     <section className="py-20 bg-gym-dark" id="gallery">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
+      <div ref={ref} className="container mx-auto px-4">
+        <h2 className={`text-4xl md:text-5xl font-bold text-center mb-16 animate-in-up ${isVisible ? "visible" : ""}`}>
           {t.galleryTitle}
         </h2>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {galleryImages.map((image, index) => (
+          {galleryImages.map((image, index) => {
+            const staggerClass = ["stagger-1", "stagger-2", "stagger-3", "stagger-4", "stagger-5", "stagger-6"][index % 6];
+            return (
             <div
               key={index}
-              className="relative aspect-square overflow-hidden rounded-lg group cursor-pointer"
+              className={`relative aspect-square overflow-hidden rounded-lg group cursor-pointer animate-in-scale ${staggerClass} ${isVisible ? "visible" : ""}`}
             >
               <Image
                 src={image}
@@ -46,7 +50,8 @@ export default function GallerySection() {
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300" />
             </div>
-          ))}
+          );
+          })}
         </div>
       </div>
     </section>

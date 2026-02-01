@@ -3,23 +3,25 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
 import { getWhatsAppLink, GOOGLE_MAPS_EMBED, WHATSAPP_NUMBER, EMAIL_ADDRESS } from "@/lib/constants";
+import { useInView } from "@/hooks/useInView";
 import ContactForm from "./ContactForm";
 
 export default function ContactSection() {
   const { language, isRTL } = useLanguage();
   const t = translations[language];
+  const { ref, isVisible } = useInView();
 
   return (
     <section className="py-20 bg-gym-gray" id="contact">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
+      <div ref={ref} className="container mx-auto px-4">
+        <h2 className={`text-4xl md:text-5xl font-bold text-center mb-16 animate-in-up ${isVisible ? "visible" : ""}`}>
           {t.contactTitle}
         </h2>
 
         {/* Map and Info Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Map */}
-          <div className="rounded-lg overflow-hidden h-96 lg:h-auto">
+          <div className={`rounded-lg overflow-hidden h-96 lg:h-auto animate-in stagger-1 ${isVisible ? "visible" : ""}`}>
             <iframe
               src={GOOGLE_MAPS_EMBED}
               width="100%"
@@ -33,7 +35,7 @@ export default function ContactSection() {
           </div>
 
           {/* Contact Info */}
-          <div className="flex flex-col justify-center space-y-8">
+          <div className={`flex flex-col justify-center space-y-8 animate-in stagger-2 ${isVisible ? "visible" : ""}`}>
             <div>
               <h3 className="text-2xl font-bold text-gym-yellow mb-2">
                 {t.contactAddress}

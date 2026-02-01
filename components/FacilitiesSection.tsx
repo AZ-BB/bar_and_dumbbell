@@ -2,6 +2,7 @@
 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
+import { useInView } from "@/hooks/useInView";
 import Image from "next/image";
 
 const facilities = [
@@ -26,19 +27,22 @@ const facilities = [
 export default function FacilitiesSection() {
   const { language } = useLanguage();
   const t = translations[language];
+  const { ref, isVisible } = useInView();
 
   return (
     <section className="py-20 bg-gym-dark" id="facilities">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
+      <div ref={ref} className="container mx-auto px-4">
+        <h2 className={`text-4xl md:text-5xl font-bold text-center mb-16 animate-in-up ${isVisible ? "visible" : ""}`}>
           {t.facilitiesTitle}
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {facilities.map((facility, index) => (
+          {facilities.map((facility, index) => {
+            const staggerClass = ["stagger-1", "stagger-2", "stagger-3", "stagger-4"][index] || "stagger-4";
+            return (
             <div
               key={index}
-              className="group relative overflow-hidden rounded-lg aspect-video"
+              className={`group relative overflow-hidden rounded-lg aspect-video animate-in ${staggerClass} ${isVisible ? "visible" : ""}`}
             >
               <Image
                 src={facility.images[0]}
@@ -54,7 +58,8 @@ export default function FacilitiesSection() {
                 </h3>
               </div>
             </div>
-          ))}
+          );
+          })}
         </div>
       </div>
     </section>

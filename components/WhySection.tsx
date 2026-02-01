@@ -2,6 +2,7 @@
 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
+import { useInView } from "@/hooks/useInView";
 
 const DumbbellIcon = () => (
   <svg className="w-16 h-16 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -60,21 +61,24 @@ const features = [
 export default function WhySection() {
   const { language } = useLanguage();
   const t = translations[language];
+  const { ref, isVisible } = useInView();
 
   return (
     <section className="py-20 bg-gym-gray" id="why">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
+      <div ref={ref} className="container mx-auto px-4">
+        <h2 className={`text-4xl md:text-5xl font-bold text-center mb-16 animate-in-up ${isVisible ? "visible" : ""}`}>
           {t.whyTitle}
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
+            const staggerClasses = ["stagger-1", "stagger-2", "stagger-3", "stagger-4"];
+            const staggerClass = staggerClasses[index] || "stagger-4";
             return (
               <div
                 key={index}
-                className="bg-gym-dark p-8 rounded-lg text-center hover:bg-gym-dark/80 transition-all duration-300 transform hover:scale-105 border border-transparent hover:border-gym-yellow group"
+                className={`bg-gym-dark p-8 rounded-lg text-center hover:bg-gym-dark/80 transition-all duration-300 transform hover:scale-105 border border-transparent hover:border-gym-yellow group animate-in-scale ${staggerClass} ${isVisible ? "visible" : ""}`}
               >
                 <div className="text-gym-yellow group-hover:text-white transition-colors duration-300 mb-6">
                   <IconComponent />

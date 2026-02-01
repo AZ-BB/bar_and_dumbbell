@@ -3,6 +3,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
 import { getWhatsAppLink } from "@/lib/constants";
+import { useInView } from "@/hooks/useInView";
 import { useState } from "react";
 
 type PricingPlan = {
@@ -85,18 +86,19 @@ export default function PricingSection() {
   const { language, isRTL } = useLanguage();
   const t = translations[language];
   const [activeTab, setActiveTab] = useState<"men" | "women">("men");
+  const { ref, isVisible } = useInView();
 
   const currentPlans = activeTab === "men" ? menPlans : womenPlans;
 
   return (
     <section className="py-20 bg-gym-gray" id="pricing">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
+      <div ref={ref} className="container mx-auto px-4">
+        <h2 className={`text-4xl md:text-5xl font-bold text-center mb-12 animate-in-up ${isVisible ? "visible" : ""}`}>
           {t.pricingTitle}
         </h2>
 
         {/* Tabs */}
-        <div className="flex justify-center mb-12">
+        <div className={`flex justify-center mb-12 animate-in ${isVisible ? "visible" : ""}`}>
           <div className="inline-flex bg-gym-dark rounded-lg p-1">
             <button
               onClick={() => setActiveTab("men")}
@@ -123,10 +125,12 @@ export default function PricingSection() {
 
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-          {currentPlans.map((plan, index) => (
+          {currentPlans.map((plan, index) => {
+            const staggerClass = ["stagger-1", "stagger-2", "stagger-3", "stagger-4", "stagger-5"][index] || "stagger-5";
+            return (
             <div
               key={index}
-              className={`bg-gym-dark rounded-lg p-6 flex flex-col ${
+              className={`bg-gym-dark rounded-lg p-6 flex flex-col animate-in-scale ${staggerClass} ${isVisible ? "visible" : ""} ${
                 plan.isVIP
                   ? "border-2 border-gym-yellow relative overflow-hidden"
                   : "border border-gym-gray"
@@ -205,7 +209,8 @@ export default function PricingSection() {
                 {t.pricingSelectPlan}
               </a>
             </div>
-          ))}
+          );
+          })}
         </div>
       </div>
     </section>
