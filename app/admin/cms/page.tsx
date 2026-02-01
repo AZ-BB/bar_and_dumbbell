@@ -62,15 +62,17 @@ export default function AdminCMSPage() {
       router.replace("/admin");
       return;
     }
-    fetch("/api/cms", { cache: "no-store" })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.plans?.men && data?.plans?.women) {
+    fetch("/api/cms?fresh=1", { cache: "no-store" })
+      .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
+      .then(({ ok, data }) => {
+        if (ok && data?.plans?.men && data?.plans?.women) {
           const normalized = {
             men: data.plans.men.map(normalizePlan),
             women: data.plans.women.map(normalizePlan),
           };
           setPlans(normalized);
+        } else if (!ok) {
+          setMessage({ type: "error", text: data?.error || "Could not load from KV store" });
         }
       })
       .catch(() => setMessage({ type: "error", text: "Failed to load plans" }))

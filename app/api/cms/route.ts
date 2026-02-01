@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { revalidateTag } from "next/cache";
-import { getPlans, CMS_PLANS_CACHE_TAG } from "@/lib/cms";
+import { getPlans, getPlansFromKVOnly, CMS_PLANS_CACHE_TAG } from "@/lib/cms";
 
 const KV_API_BASE_URL = process.env.KV_API_BASE_URL ?? "";
 const KV_API_KEY = process.env.KV_API_KEY ?? "";
@@ -8,6 +8,10 @@ const KV_KEY = process.env.KV_KEY ?? "";
 
 const CACHE_HEADERS = {
   "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+};
+
+const NO_CACHE_HEADERS = {
+  "Cache-Control": "no-store, no-cache, must-revalidate",
 };
 
 function isValidPlans(value: unknown): value is { men: unknown[]; women: unknown[] } {
@@ -23,16 +27,27 @@ function isValidPlans(value: unknown): value is { men: unknown[]; women: unknown
 
 /**
  * GET /api/cms
- * Fetches CMS data (plans) from key-value store with fallback to data/plans.json
- * Supports caching with 1 hour revalidation
+ * ?fresh=1 = CMS: fetch from KV store only (no cache, no file fallback).
+ * Otherwise = cached + file fallback for home page etc.
  */
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const fresh = searchParams.get("fresh") === "1";
+
+    if (fresh) {
+      const plans = await getPlansFromKVOnly();
+      if (!plans) {
+        return NextResponse.json(
+          { error: "Could not load from KV store" },
+          { status: 503, headers: NO_CACHE_HEADERS }
+        );
+      }
+      return NextResponse.json({ plans }, { headers: NO_CACHE_HEADERS });
+    }
+
     const plans = await getPlans();
-    return NextResponse.json(
-      { plans },
-      { headers: CACHE_HEADERS }
-    );
+    return NextResponse.json({ plans }, { headers: CACHE_HEADERS });
   } catch (error) {
     console.error("[CMS API] Failed to load CMS data:", error);
     return NextResponse.json(
