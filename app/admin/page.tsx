@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowLeft, TableOfContents, UserRound } from "lucide-react";
 import Link from "next/link";
 
 export default function AdminPage() {
@@ -20,7 +21,7 @@ export default function AdminPage() {
           <Link href="/admin/contacts">
             <div className="bg-gym-gray rounded-lg p-8 hover:bg-gym-gray/80 transition-all duration-300 border border-transparent hover:border-gym-yellow cursor-pointer group">
               <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">
-                📋
+                <UserRound className="w-10 h-10" />
               </div>
               <h2 className="text-2xl font-bold text-gym-yellow mb-2">
                 Leads Management
@@ -31,38 +32,28 @@ export default function AdminPage() {
             </div>
           </Link>
 
-          {/* Coming Soon */}
-          <div className="bg-gym-gray rounded-lg p-8 opacity-50 cursor-not-allowed">
-            <div className="text-4xl mb-4">📊</div>
-            <h2 className="text-2xl font-bold text-gray-400 mb-2">
-              Analytics
-            </h2>
-            <p className="text-gray-500">Coming soon...</p>
-          </div>
 
-          <div className="bg-gym-gray rounded-lg p-8 opacity-50 cursor-not-allowed">
-            <div className="text-4xl mb-4">👥</div>
-            <h2 className="text-2xl font-bold text-gray-400 mb-2">
-              Members
-            </h2>
-            <p className="text-gray-500">Coming soon...</p>
-          </div>
-
-          <div className="bg-gym-gray rounded-lg p-8 opacity-50 cursor-not-allowed">
-            <div className="text-4xl mb-4">⚙️</div>
-            <h2 className="text-2xl font-bold text-gray-400 mb-2">
-              Settings
-            </h2>
-            <p className="text-gray-500">Coming soon...</p>
-          </div>
+          <Link href="/admin/cms">
+            <div className="bg-gym-gray rounded-lg p-8 hover:bg-gym-gray/80 transition-all duration-300 border border-transparent hover:border-gym-yellow cursor-pointer group">
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">
+                <TableOfContents className="w-10 h-10" />
+              </div>
+              <h2 className="text-2xl font-bold text-gym-yellow mb-2">
+                Content Management
+              </h2>
+              <p className="text-gray-400">
+                View and manage all content like gallery images and videos
+              </p>
+            </div>
+          </Link>
         </div>
 
         <div className="mt-12 text-center">
           <Link
             href="/"
-            className="inline-block px-6 py-3 bg-gym-yellow text-gym-dark font-bold rounded-lg hover:bg-yellow-500 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gym-yellow text-gym-dark font-bold rounded-lg hover:bg-yellow-500 transition-all duration-300"
           >
-            ← Back to Website
+            <ArrowLeft className="w-4 h-4" /> Back to Website
           </Link>
         </div>
       </div>

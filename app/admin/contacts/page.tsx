@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { RefreshCw } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { Lead } from "@/lib/supabase";
 
@@ -123,9 +124,9 @@ export default function AdminContactsPage() {
           <button
             onClick={fetchLeads}
             disabled={loading}
-            className="px-6 py-3 bg-gym-gray text-white font-bold rounded-lg hover:bg-gym-gray/80 transition-all duration-300 disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gym-gray text-white font-bold rounded-lg hover:bg-gym-gray/80 transition-all duration-300 disabled:opacity-50"
           >
-            🔄 Refresh
+            <RefreshCw className="w-4 h-4" /> Refresh
           </button>
         </div>
 

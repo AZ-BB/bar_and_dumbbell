@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { Circle } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
 
@@ -33,10 +34,10 @@ export default function Footer() {
             </p>
             <Link 
               href="/admin" 
-              className="text-gray-600 hover:text-gym-yellow text-xs transition-colors"
+              className="text-gray-600 hover:text-gym-yellow transition-colors inline-flex items-center"
               title="Admin"
             >
-              •
+              <Circle className="w-1.5 h-1.5 fill-current" />
             </Link>
           </div>
         </div>

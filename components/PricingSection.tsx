@@ -1,5 +1,6 @@
 "use client";
 
+import { Check } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
 import { getWhatsAppLink } from "@/lib/constants";
@@ -162,36 +163,36 @@ export default function PricingSection() {
                     {activeTab === "men" ? (
                       <>
                         {plan.features[0] && plan.features[0] !== "0" && (
-                          <p className="text-sm text-gray-400">
-                            ✓ {plan.features[0]} {t.pricingInvitations}
+                          <p className="text-sm text-gray-400 flex items-center gap-2">
+                            <Check className="w-4 h-4 shrink-0 text-gym-yellow" /> {plan.features[0]} {t.pricingInvitations}
                           </p>
                         )}
                         {plan.features[1] && plan.features[1] !== "0" && (
-                          <p className="text-sm text-gray-400">
-                            ✓ {plan.features[1]} {t.pricingNutrition}
+                          <p className="text-sm text-gray-400 flex items-center gap-2">
+                            <Check className="w-4 h-4 shrink-0 text-gym-yellow" /> {plan.features[1]} {t.pricingNutrition}
                           </p>
                         )}
                         {plan.features[2] && plan.features[2] !== "0" && (
-                          <p className="text-sm text-gray-400">
-                            ✓ {plan.features[2]} {t.pricingSauna}
+                          <p className="text-sm text-gray-400 flex items-center gap-2">
+                            <Check className="w-4 h-4 shrink-0 text-gym-yellow" /> {plan.features[2]} {t.pricingSauna}
                           </p>
                         )}
                         {plan.features[3] && plan.features[3] !== "0" && (
-                          <p className="text-sm text-gray-400">
-                            ✓ {plan.features[3]} {t.pricingJacuzzi}
+                          <p className="text-sm text-gray-400 flex items-center gap-2">
+                            <Check className="w-4 h-4 shrink-0 text-gym-yellow" /> {plan.features[3]} {t.pricingJacuzzi}
                           </p>
                         )}
                       </>
                     ) : (
                       <>
                         {plan.features[0] && plan.features[0] !== "0" && (
-                          <p className="text-sm text-gray-400">
-                            ✓ {plan.features[0]} {t.pricingInvitations}
+                          <p className="text-sm text-gray-400 flex items-center gap-2">
+                            <Check className="w-4 h-4 shrink-0 text-gym-yellow" /> {plan.features[0]} {t.pricingInvitations}
                           </p>
                         )}
                         {plan.features[1] && plan.features[1] !== "0" && (
-                          <p className="text-sm text-gray-400">
-                            ✓ {plan.features[1]} {t.pricingNutrition}
+                          <p className="text-sm text-gray-400 flex items-center gap-2">
+                            <Check className="w-4 h-4 shrink-0 text-gym-yellow" /> {plan.features[1]} {t.pricingNutrition}
                           </p>
                         )}
                       </>
