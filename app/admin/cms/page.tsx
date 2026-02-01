@@ -62,7 +62,7 @@ export default function AdminCMSPage() {
       router.replace("/admin");
       return;
     }
-    fetch("/api/cms")
+    fetch("/api/cms", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data?.plans?.men && data?.plans?.women) {
